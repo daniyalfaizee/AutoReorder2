@@ -1,0 +1,24 @@
+{
+    "type": "object",
+    "group":{
+        "id":"autoreorderapp",
+        "title":"AutoReorderApp",
+        "description":"AutoReorderApp Setup"
+    },
+    "subtab":{
+        "id":"autoreordergeneralconfig",
+        "title":"General Configuration",
+        "description":"this is used for general app configuration",
+        "group":"autoreorderapp"
+    },
+    "properties": { 
+        "autoreorderapp.config": {
+            "group": "autoreorderapp",
+            "subtab": "autoreordergeneralconfig",
+            "type": "boolean",
+            "title": "Enable Module On WebStore",
+            "description": "Enable Module On WebStore",
+            "default": false
+        }
+    }
+}

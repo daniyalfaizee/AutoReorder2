@@ -1,0 +1,13 @@
+{
+    "type": "object",
+    "properties": { 
+        "AutoReorder.config": {
+            "group": "extensions",
+            "subtab": "AutoReorder_subtab",
+            "type": "string",
+            "title": "AutoReorder_Title",
+            "description": "Config description example",
+            "default": "Default config example"
+        }
+    }
+}

@@ -1,0 +1,235 @@
+{
+    "name": "AutoReorder",
+    "fantasyName": "Item Auto-Reorder",
+    "vendor": "DME",
+    "version": "0.0.2",
+    "type": "extension",
+    "target": "SCA,SCS",
+    "target_version": {
+        "SCA": ">=22.2.0",
+        "SCS": ">=22.2.0"
+    },
+    "description": "Implements the functionality to periodically reorder some Items automatically",
+    "skins": [],
+    "assets": {
+        "img": {
+            "files": []
+        },
+        "fonts": {
+            "files": []
+        },
+        "services": {
+            "files": [
+                "services/checkout.Service.ss",
+                "services/AutoReOrderSubscriptionInfo.Service.ss",
+                "services/AutoReorderItemInfo.Service.ss"
+            ]
+        }
+    },
+    "configuration": {
+        "files": [
+            "Modules/AutoReorderConfiguration/Configuration/AutoReorderConfiguration.json",
+            "Modules/AutoReorderConfiguration/MyAccountMenuLabel.json",
+            "Modules/AutoReorder/Configuration/AutoReorder.json"
+        ]
+    },
+    "sass": {
+        "entry_points": {
+            "shopping": "Modules/AutoReorder/Sass/_autoreorder-autoreorder.scss",
+            "myaccount": "Modules/AutoReorderSubscriptionInfo/Sass/_autoreorder-autoreordersubscriptioninfo.scss",
+            "checkout": "Modules/checkout/Sass/_autoreorder-checkout.scss"
+        },
+        "files": [
+            "Modules/AutoReorder/Sass/_autoreorder-autoreorder.scss",
+            "Modules/checkout/Sass/_autoreorder-checkout.scss",
+            "Modules/AutoReorderSubscriptionInfo/Sass/_autoreorder-autoreordersubscriptioninfo.scss",
+            "Modules/AutoReorderItemInfo/Sass/_autoreorder-autoreorderiteminfo.scss"
+        ]
+    },
+    "templates": {
+        "application": {
+            "shopping": {
+                "files": [
+                    "Modules/AutoReorder/Templates/dme_autoreorder_autoreorder.tpl",
+                    "Modules/checkout/Templates/dme_autoreorder_checkout.tpl",
+                    "Modules/AutoReorder/Templates/dme_autoreorder_form.tpl",
+                    "Modules/AutoReorder/Templates/dme_autoreorder_cart.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_autoreordersubscriptioninfo.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscription_list_view.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscription_info_collection_view.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscription_info_row_view.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscription_detail_view.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/test.template.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/test.template2.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscriptioneditview.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_autoreorderiteminfo.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_collection_view.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_item_edit_view.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_item_list_view.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_row_view.tpl"
+                ]
+            },
+            "myaccount": {
+                "files": [
+                    "Modules/AutoReorder/Templates/dme_autoreorder_autoreorder.tpl",
+                    "Modules/checkout/Templates/dme_autoreorder_checkout.tpl",
+                    "Modules/AutoReorder/Templates/dme_autoreorder_form.tpl",
+                    "Modules/AutoReorder/Templates/dme_autoreorder_cart.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_autoreordersubscriptioninfo.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscription_list_view.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscription_info_collection_view.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscription_info_row_view.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscription_detail_view.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/test.template.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/test.template2.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscriptioneditview.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_autoreorderiteminfo.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_collection_view.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_item_edit_view.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_item_list_view.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_row_view.tpl"
+                ]
+            },
+            "checkout": {
+                "files": [
+                    "Modules/AutoReorder/Templates/dme_autoreorder_autoreorder.tpl",
+                    "Modules/checkout/Templates/dme_autoreorder_checkout.tpl",
+                    "Modules/AutoReorder/Templates/dme_autoreorder_form.tpl",
+                    "Modules/AutoReorder/Templates/dme_autoreorder_cart.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_autoreordersubscriptioninfo.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscription_list_view.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscription_info_collection_view.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscription_info_row_view.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscription_detail_view.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/test.template.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/test.template2.tpl",
+                    "Modules/AutoReorderSubscriptionInfo/Templates/dme_autoreorder_subscriptioneditview.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_autoreorderiteminfo.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_collection_view.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_item_edit_view.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_item_list_view.tpl",
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_row_view.tpl"
+                ]
+            }
+        }
+    },
+    "javascript": {
+        "entry_points": {
+            "shopping": "Modules/AutoReorder/JavaScript/DME.AutoReorder.AutoReorder.js",
+            "myaccount": "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoReorderSubscriptionInfo.js",
+            "checkout": "Modules/checkout/JavaScript/DME.AutoReorder.checkout.js"
+        },
+        "application": {
+            "shopping": {
+                "files": [
+                    "Modules/AutoReorder/JavaScript/DME.AutoReorder.AutoReorder.js",
+                    "Modules/AutoReorder/JavaScript/AutoReorder.View.js",
+                    "Modules/AutoReorder/JavaScript/DME.AutoReorder.AutoReorder.Model.js",
+                    "Modules/AutoReorder/JavaScript/DME.AutoReorder.AutoReorder.SS2Model.js",
+                    "Modules/checkout/JavaScript/DME.AutoReorder.checkout.js",
+                    "Modules/checkout/JavaScript/checkout.View.js",
+                    "Modules/checkout/JavaScript/DME.AutoReorder.checkout.Model.js",
+                    "Modules/checkout/JavaScript/DME.AutoReorder.checkout.SS2Model.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoReorderSubscriptionInfo.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReorderSubscriptionInfo.View.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoReorderSubscriptionInfo.Model.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoReorderSubscriptionInfo.SS2Model.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReorderCollection.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReorderCollectionView.js",
+                    "Modules/AutoReorder/JavaScript/AutoReOrder.CartView.js",
+                    "Modules/AutoReorder/JavaScript/AutoReOrderFormView.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoReorderSubscriptionInfo.RowView.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoreorderSubscriptionDetail.View.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReOrderSubscriptionListView.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/test.view.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/test.view2.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.SubscriptionEditView.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/AutoReorderItemInfo.View.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.SS2Model.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.Collection.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.CollectionView.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.ItemListView.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReOrderSubscriptionDetailView.js"
+                ]
+            },
+            "myaccount": {
+                "files": [
+                    "Modules/AutoReorder/JavaScript/DME.AutoReorder.AutoReorder.js",
+                    "Modules/AutoReorder/JavaScript/AutoReorder.View.js",
+                    "Modules/AutoReorder/JavaScript/DME.AutoReorder.AutoReorder.Model.js",
+                    "Modules/AutoReorder/JavaScript/DME.AutoReorder.AutoReorder.SS2Model.js",
+                    "Modules/checkout/JavaScript/DME.AutoReorder.checkout.js",
+                    "Modules/checkout/JavaScript/checkout.View.js",
+                    "Modules/checkout/JavaScript/DME.AutoReorder.checkout.Model.js",
+                    "Modules/checkout/JavaScript/DME.AutoReorder.checkout.SS2Model.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoReorderSubscriptionInfo.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReorderSubscriptionInfo.View.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoReorderSubscriptionInfo.Model.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoReorderSubscriptionInfo.SS2Model.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReorderCollection.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReorderCollectionView.js",
+                    "Modules/AutoReorder/JavaScript/AutoReOrder.CartView.js",
+                    "Modules/AutoReorder/JavaScript/AutoReOrderFormView.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoReorderSubscriptionInfo.RowView.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoreorderSubscriptionDetail.View.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReOrderSubscriptionListView.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/test.view.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/test.view2.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.SubscriptionEditView.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/AutoReorderItemInfo.View.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.SS2Model.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.Collection.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.CollectionView.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.ItemListView.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReOrderSubscriptionDetailView.js"
+                ]
+            },
+            "checkout": {
+                "files": [
+                    "Modules/AutoReorder/JavaScript/DME.AutoReorder.AutoReorder.js",
+                    "Modules/AutoReorder/JavaScript/AutoReorder.View.js",
+                    "Modules/AutoReorder/JavaScript/DME.AutoReorder.AutoReorder.Model.js",
+                    "Modules/AutoReorder/JavaScript/DME.AutoReorder.AutoReorder.SS2Model.js",
+                    "Modules/checkout/JavaScript/DME.AutoReorder.checkout.js",
+                    "Modules/checkout/JavaScript/checkout.View.js",
+                    "Modules/checkout/JavaScript/DME.AutoReorder.checkout.Model.js",
+                    "Modules/checkout/JavaScript/DME.AutoReorder.checkout.SS2Model.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoReorderSubscriptionInfo.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReorderSubscriptionInfo.View.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoReorderSubscriptionInfo.Model.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoReorderSubscriptionInfo.SS2Model.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReorderCollection.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReorderCollectionView.js",
+                    "Modules/AutoReorder/JavaScript/AutoReOrder.CartView.js",
+                    "Modules/AutoReorder/JavaScript/AutoReOrderFormView.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoReorderSubscriptionInfo.RowView.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.AutoreorderSubscriptionDetail.View.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReOrderSubscriptionListView.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/test.view.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/test.view2.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/DME.AutoReorder.SubscriptionEditView.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/AutoReorderItemInfo.View.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.SS2Model.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.Collection.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.CollectionView.js",
+                    "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.ItemListView.js",
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReOrderSubscriptionDetailView.js"
+                ]
+            }
+        }
+    },
+    "local_folder": "Workspace\\AutoReorder",
+    "suitescript2": {
+        "files": [
+            "Modules/AutoReorder/SuiteScript2/AutoReorder.Service.ss",
+            "Modules/AutoReorder/SuiteScript2/AutoReorder.Model.js",
+            "Modules/AutoReorderSubscriptionInfo/SuiteScript2/AutoReorderSubscriptionInfo.Service.ss",
+            "Modules/AutoReorderSubscriptionInfo/SuiteScript2/AutoReorder.SubscriptionInfo.Model.js",
+            "Modules/AutoReorderItemInfo/SuiteScript2/AutoReorderItemInfo.Service.ss",
+            "Modules/AutoReorderItemInfo/SuiteScript2/AutoReorder.ItemInfo.Model.js"
+        ]
+    }
+}

@@ -1,0 +1,113 @@
+/*
+	Sass Application Entry Point
+	Link all your sass dependencies in the right order
+
+	Example:
+	@import "other-sass-file.scss";
+	@import "../../<other module>/Sass/other-sass-file.scss";
+*/
+
+.autoreorder-info-card {
+    @extend .info-card;
+}
+
+.autoreorder-info-card-content {
+    @extend .info-card-content;
+    color: $sc-color-secondary;
+    font-weight: bold;
+}
+
+.autoreorder-form {
+    @extend .box-column;
+}
+
+.autoreorder-form-control-group {
+    @extend .control-group;
+    margin: $sc-margin-lv3 0 0 0;
+}
+
+.autoreorder-form-checkbox,
+.autoreorder-form-input {
+    @extend .input-large;
+}
+
+.autoreorder-form-label-required {
+    @extend .required;
+}
+
+.autoreorder-form-submit {
+    @extend .button-primary;
+    @extend .button-medium;
+}
+
+.autoreorder-hide-fields {
+    display: none;
+}
+
+// .autoreorder-form-checkbox {
+//     width: 20px;
+// }
+
+// .autoreorder-form-checkbox {
+//     -webkit-appearance: none;
+//     -moz-appearance: none;
+//     appearance: none;
+//     border: 2px solid #ccc;
+//     border-radius: 4px;
+//     width: 20px;
+//     height: 25px;
+//     margin-top: 1px;
+//     outline: none;
+//     position: relative;
+// }
+
+// .autoreorder-form-checkbox::before {
+//     content: "\2714";
+//     position: absolute;
+//     top: 50%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//     font-size: 18px;
+//     color: #ccc;
+// }
+
+// .autoreorder-form-checkbox:checked::before {
+
+//     content: '\2713';
+//     display: block;
+//     text-align: center;
+//     color: #fff;
+//     font-size: 18px;
+//     font-weight: bold;
+// }
+
+// .autoreorder-form-checkbox:checked {
+//     border: 2px solid #007bff;
+//     background-color: #007bff;
+// }
+
+.autoreorder-form {
+    background-color: #fff;
+    padding: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 0px;
+
+}
+
+.autoreorder-form-control-group {
+    margin: 0px;
+    margin-left: 10px;
+}
+
+// input.autoreorder-form-checkbox {
+    //     transform: scale(1.5);
+
+    // }
+
+@media (max-width: 767px) {
+    .autoreorder-form {
+        padding: 10px;
+
+    }
+}

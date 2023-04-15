@@ -1,0 +1,34 @@
+{
+  "type": "object",
+
+  "subtab": {
+    "id": "autoreorderconfig",
+    "title": "My Account Menu Label Configuration",
+    "description": "this is used for changing label in my account menu",
+    "group": "autoreorderapp"
+  },
+
+  "properties": {
+    "autoreorderapp.programlabel": {
+      "group": "autoreorderapp",
+      "subtab": "autoreorderconfig",
+      "type": "string",
+      "title": "AutoReorder Program Label",
+      "default": "Auto ReOrder Subscriptions"
+    },
+    "autoreorderapp.pastsubscriptions": {
+      "group": "autoreorderapp",
+      "subtab": "autoreorderconfig",
+      "type": "string",
+      "title": "Past Subscriptions",
+      "default": "Past Subscriptions"
+    },
+    "autoreorderapp.activesubscriptions": {
+      "group": "autoreorderapp",
+      "subtab": "autoreorderconfig",
+      "type": "string",
+      "title": "Active Subscriptions",
+      "default": "Active Subscriptions"
+    }
+  }
+}

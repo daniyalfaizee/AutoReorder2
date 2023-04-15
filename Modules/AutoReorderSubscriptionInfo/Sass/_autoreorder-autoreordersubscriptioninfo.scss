@@ -1,0 +1,201 @@
+/*
+	Sass Application Entry Point
+	Link all your sass dependencies in the right order
+
+	Example:
+	@import "other-sass-file.scss";
+	@import "../../<other module>/Sass/other-sass-file.scss";
+*/
+
+.autoreordersubscriptioninfo-info-card {
+	@extend .info-card;
+}
+
+.autoreordersubscriptioninfo-info-card-content {
+	@extend .info-card-content;
+	color: $sc-color-secondary;
+	font-weight: bold;
+}
+
+// .autoreorder-list-table-cell-label {
+// 	display: none;
+// }
+.user-preferences-list-table-header {
+	background-color: #6667ab;
+	color: #fff;
+}
+
+.user-preferences-list-table-header th {
+	color: #fff;
+	font-weight: 500;
+}
+
+input.autoorder-table-checkbox {
+	margin: 10px;
+	transform: scale(1.5);
+
+}
+
+.autoreorder-list-table-cell-button {
+	width: 100%;
+	border: none;
+
+	background: transparent;
+	font-weight: 600;
+	color: #f14a15;
+	border: 1px solid #f14a15;
+	border-radius: 6px;
+	margin-bottom: 0px;
+	padding: 10px 25px;
+	border-radius: 6px;
+	font-size: 1rem;
+}
+
+.autoreorder-button-section {
+	display: flex;
+
+}
+
+.auto_reorder_icons_desktop {
+	display: block;
+}
+
+.auto_reorder_icons_mobile {
+	display: none;
+}
+
+.autoreorder_table_edit_button_action {
+	width: auto;
+	margin-left: 10px;
+	border: none;
+	background: transparent;
+	color: #f14a15;
+	font-weight: 600;
+	padding-bottom: 0px;
+	padding-right: 0px;
+}
+
+.auto_reorder_icons_desktop-alignment {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 80px;
+}
+
+@media screen and (max-width: 992px) {
+
+	.auto_reorder_icons_desktop-alignment {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: auto;
+	}
+
+	.auto_reorder_icons_desktop {
+		display: none;
+	}
+
+	.auto_reorder_icons_mobile {
+		display: block;
+	}
+
+	.autoreorder-list-table-cell-label {
+		margin-top: 10px;
+	}
+
+	.autoreorder-button-section {
+		display: flex;
+		justify-content: end;
+		align-items: end;
+	}
+
+	.autoreorder-list-table-cell-button {
+		width: 100%;
+		border: none;
+
+
+		font-weight: 600;
+		color: #f14a15;
+		border: 1px solid #f14a15;
+		border-radius: 6px;
+		margin-bottom: 0px;
+		padding: 10px 25px;
+		border-radius: 6px;
+		font-size: 1rem;
+	}
+
+	.user-preferences-list-table-header {
+		position: absolute;
+		left: -9999px;
+		overflow: hidden;
+		width: 0px;
+		height: 0px;
+
+	}
+
+	.table-auto-reorder tr,
+	.table-auto-reorder td,
+	.table-auto-reorder th,
+	.table-auto-reorder thead,
+	.table-auto-reorder tbody,
+	.table-auto-reorder {
+		display: block;
+	}
+
+	.autoreorder-list-table tr,
+	.autoreorder-list-table td,
+	.autoreorder-list-table th,
+	.autoreorder-list-table thead,
+	.autoreorder-list-table tbody,
+	.autoreorder-list-table {
+		display: block;
+
+	}
+
+
+	.autoreorder-list-table tbody tr td::before {
+		display: inline-block;
+		width: 37%;
+		min-width: 100px;
+		color: #3e3e41;
+		margin-right: 10px;
+		font-weight: bold;
+	}
+
+	.table-auto-reorder tbody tr td::before {
+		display: inline-block;
+		width: 100%;
+		min-width: 100px;
+		color: #3e3e41;
+		margin-right: 10px;
+		font-weight: bold;
+		margin-bottom: 5px;
+
+	}
+
+
+
+	.table-auto-reorder tbody tr td::before {
+		content: attr(data-title);
+	}
+
+	.autoreorder-list-table tbody tr td::before {
+		content: attr(data-title);
+	}
+
+	.autoreorder-list-table-row {
+		margin-top: 20px;
+	}
+
+	.table-auto-reorder {
+		border: none;
+	}
+
+
+}
+
+@media (min-width:992px) and (max-width:1780px) {
+	.table-auto-scroll {
+		overflow-x: auto;
+	}
+}
