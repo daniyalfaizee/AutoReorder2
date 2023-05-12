@@ -105,23 +105,55 @@ define('DME.AutoReorder.checkout.View', [
     },
 
     addItemToAutoReorderSubscription: function (e) {
+      var commonIdString = e.currentTarget.id;
+      var liveOrderInstance = LiveOrderModel.getInstance();
+      var liveOrderOptions = liveOrderInstance.get('options');
+      var itemDetails = JSON.parse(liveOrderOptions.custbody_tdc_reorder_item_details);
+      console.log({itemDetails:itemDetails});
+      var keyObj = Object.keys(itemDetails);
+      if(commonIdString.search("-quantity") == -1 && commonIdString.search("-frequency") == -1 && !e.currentTarget.checked){
+        jQuery(function(){
+          if(jQuery("#" + commonIdString + "-quantity")[0].value != "")
+            jQuery("#" + commonIdString + "-quantity")[0].value = "";
+          if(jQuery("#" + commonIdString + "-frequency")[0].value != "")
+            jQuery("#" + commonIdString + "-frequency")[0].value = "";
+        });
+        if(keyObj.indexOf(commonIdString) > -1)
+          delete itemDetails[keyObj[keyObj.indexOf(commonIdString)]];
+      }
+      else{
+        var itemIdKey = commonIdString.split("-")[0];
+        console.log({keys: keyObj})
+        if(keyObj.indexOf(itemIdKey) == -1)
+          itemDetails[itemIdKey] = {subscribed: false, frequency: null, quantity: null}
+        itemDetails[itemIdKey].subscribed = jQuery("#" + itemIdKey)[0].checked;
+        itemDetails[itemIdKey].frequency = jQuery("#" + itemIdKey + "-frequency")[0].value;
+        itemDetails[itemIdKey].quantity = jQuery("#" + itemIdKey + "-quantity")[0].value;
+      }
+      liveOrderOptions.custbody_tdc_reorder_item_details = JSON.stringify(itemDetails)
+      console.log(itemDetails)
+      liveOrderInstance.set('options', liveOrderOptions);
+      liveOrderInstance.save().then(function(){
+        console.log("save  success");
+      }).fail(function(err){
+        console.log(err);
+      });
+      var liveOrderInstance = LiveOrderModel.getInstance();
+      var liveOrderLines = liveOrderInstance.get("lines");
+      var itemDetailsObj = {}, modelObj= {};
+      console.log({LiveOrderModel:LiveOrderModel.getInstance()})
       var self = this
       var promise = new Promise(function (resolve, reject) {
       var lines = self.model.get('lines').models
-      var lines = self.model.get('lines').models
-      for(var i = 0; i < lines.length; i++){
-        modelObj[lines[i].id] = i;
-      }
-        var lines = self.model.get('lines').models
       for(var i = 0; i < lines.length; i++){
         modelObj[lines[i].id] = i;
       }
         
         _.each(lines, function (line) {
-         
+          
           if (line.id == e.target.id.split('-')[0]) {
             var custcol_tdc_reorder_subscribed =
-              line.attributes.options[
+              line.attributes.options[  
                 line.attributes.options.findIndex(function (el) {
                   return (
                     el.attributes.cartOptionId ==
@@ -161,25 +193,25 @@ define('DME.AutoReorder.checkout.View', [
                 quantity: ""
               }
             // } else {
-              if (e.target.name == 'item-checkbox') {
-                e.target.checked == true
-                  ? (self.autoReOrderSubscribedItemDetails[
-                      line.id.toString()
-                    ].subscribed = true)
-                  : delete self.autoReOrderSubscribedItemDetails[
-                      line.id.toString()
-                    ]
-              } else if (e.target.name == 'item-frequency') {
-                self.autoReOrderSubscribedItemDetails[
-                  line.id.toString()
-                ].frequency = e.target.value < 1 ? 1 : e.target.value
-              } else if (e.target.name == 'item-quantity') {
-                self.autoReOrderSubscribedItemDetails[
-                  line.id.toString()
-                ].quantity = e.target.value < 1 ? 1 : e.target.value
-              }
-              itemDetailsObj[line.id.toString()] = self.autoReOrderSubscribedItemDetails[line.id.toString()];
-              // }
+            if (e.target.name == 'item-checkbox') {
+              e.target.checked == true
+                ? (self.autoReOrderSubscribedItemDetails[
+                    line.id.toString()
+                  ].subscribed = true)
+                : delete self.autoReOrderSubscribedItemDetails[
+                    line.id.toString()
+                  ]
+            } else if (e.target.name == 'item-frequency') {
+              self.autoReOrderSubscribedItemDetails[
+                line.id.toString()
+              ].frequency = e.target.value < 1 ? 1 : e.target.value
+            } else if (e.target.name == 'item-quantity') {
+              self.autoReOrderSubscribedItemDetails[
+                line.id.toString()
+              ].quantity = e.target.value < 1 ? 1 : e.target.value
+            }
+            itemDetailsObj[line.id.toString()] = self.autoReOrderSubscribedItemDetails[line.id.toString()];
+            // }
             // console.log(self.autoReOrderSubscribedItemDetails)
           }
         })
@@ -241,7 +273,6 @@ define('DME.AutoReorder.checkout.View', [
       self.model.set('autoReOrderSubscribedItemDetails', a, { validate: true })
       LiveOrderModel.getInstance().set('options', a)
       console.log({selfmodel:self.model.get('autoReOrderSubscribedItemDetails')});
-      console.log(LiveOrderModel.getInstance().get('options'));
     },
 
     disablePaymentMethods: function (isAutoReorder) {
@@ -277,6 +308,7 @@ define('DME.AutoReorder.checkout.View', [
     },
     getEligibleItems: function (self) {
       var lines = LiveOrderModel.getInstance().get('lines').models
+      console.log({lines:lines})
       var eligibleItems = []
       _.each(lines, function (line) {
         var lineItemId = line.id
@@ -328,31 +360,6 @@ define('DME.AutoReorder.checkout.View', [
       })
       // console.log('eligibleItems: ',self.autoReOrderSubscribedItemDetails)
       return eligibleItems
-    },
-
-    cancelSubscriptions: function(e){
-      jQuery(function(){
-        for(var i = 0; i < jQuery('[data-action="subscribe"]').length; i++){
-          if(!!jQuery('[data-action="subscribe"]')[i].checked)
-            jQuery('[data-action="subscribe"]')[i].checked = false;
-          if(jQuery('[data-action="order-quantity"]')[i].value != "")
-            jQuery('[data-action="order-quantity"]')[i].value = "";
-          if(jQuery('[data-action="order-frequency"]')[i].value != "")
-            jQuery('[data-action="order-frequency"]')[i].value = "";
-        }
-        for(var i = 0; i < jQuery('.order-wizard-paymentmethod-selector-module-option').length; i++)
-          if(!!jQuery('.order-wizard-paymentmethod-selector-module-option')[i].disabled)
-            jQuery('.order-wizard-paymentmethod-selector-module-option')[i].disabled = false;
-      });
-      var liveOrderInstance = LiveOrderModel.getInstance();
-      var liveOrderOptions = liveOrderInstance.get('options');
-      liveOrderOptions.custbody_tdc_reorder_item_details = "";
-      liveOrderInstance.set('options', liveOrderOptions);
-      liveOrderInstance.save().then(function(){
-        console.log("save success");
-      }).fail(function(err){
-        console.log(err);
-      });
     },
 
     //@method getContext @return DME.AutoReorder.checkout.View.Context

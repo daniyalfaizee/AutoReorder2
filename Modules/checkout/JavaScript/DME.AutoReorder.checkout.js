@@ -54,7 +54,7 @@ define('DME.AutoReorder.checkout', [
               var validateMessage = confirm('Your Subscription request will be denied because you did not provide all the required Information. Click "Ok" to place your Order without Subscribing or "Cancel" to stop the Order placement.');
               if(!!validateMessage){
                 console.log("you clicked ok");
-                return jQuery.Deferred().reject();//resolve();
+                return jQuery.Deferred().resolve();
               }
               else{
                 console.log("you clicked cancel");

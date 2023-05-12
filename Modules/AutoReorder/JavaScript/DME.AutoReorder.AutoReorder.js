@@ -46,7 +46,7 @@ define('DME.AutoReorder.AutoReorder', [
               'AutoReorder.View': {
                 childViewIndex: 1,
                 childViewConstructor: function () {
-                  return new AutoReorderFormView({
+                  return new AutoReorderView({
                     container: container,
                     pdp: pdp,
                     cart: cart,
