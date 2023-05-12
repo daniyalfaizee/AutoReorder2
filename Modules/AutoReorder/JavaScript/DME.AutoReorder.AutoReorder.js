@@ -46,7 +46,7 @@ define('DME.AutoReorder.AutoReorder', [
               'AutoReorder.View': {
                 childViewIndex: 1,
                 childViewConstructor: function () {
-                  return new AutoReorderView({
+                  return new AutoReorderFormView({
                     container: container,
                     pdp: pdp,
                     cart: cart,
@@ -65,7 +65,7 @@ define('DME.AutoReorder.AutoReorder', [
                     'AutoReOrder.CartView': {
                       childViewIndex: 1,
                       childViewConstructor: function () {
-                        return new AutoReOrderCartView({cartItems:lines})
+                        return new AutoReOrderCartView({ cartItems: lines })
                       }
                     }
                   }
@@ -76,13 +76,13 @@ define('DME.AutoReorder.AutoReorder', [
         }
 
 
-          layout.registerView('AutoReorder.Form.View', function () {
-            return new AutoReorderFormView({
-              container:container,
-              pdp: pdp,
-              cart:cart
-            })
+        layout.registerView('AutoReorder.Form.View', function () {
+          return new AutoReorderFormView({
+            container: container,
+            pdp: pdp,
+            cart: cart
           })
+        })
       }
     }
   }

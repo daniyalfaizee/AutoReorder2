@@ -28,7 +28,6 @@ define('DME.AutoReorder.AutoReorder.View', [
     this.itemInfo = this.pdp.getItemInfo()
     this.model = new AutoReorderSS2Model();
     this.model.set("customerInfo", userInfo.id);
-
     this.cart = options.cart
     this.template = dme_autoreorder_autoreorder_tpl
 
@@ -36,6 +35,7 @@ define('DME.AutoReorder.AutoReorder.View', [
 				(you'll need to deploy and activate the extension first)
 			*/
 
+    // console.log('test', self.pdp.getSelectedMatrixChilds({}))
     if (this.itemInfo.item.itemoptions_detail.matrixtype) {
       self.isMatrixItem = true
       this.pdp.on('afterOptionSelection', function (e) {

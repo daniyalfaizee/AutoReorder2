@@ -305,15 +305,15 @@ define(['N/record', 'N/runtime', 'N/search'], function (
         value: !body.custrecord_tdc_is_subscription_inactive
       })
 
-      reorderItemDetails.setText({
-        fieldId: 'custrecord_tdc_reorder_date',
-        text: netSuiteFormatdate(body.custrecord_tdc_reorder_date)
-      })
+      // reorderItemDetails.setText({
+      //   fieldId: 'custrecord_tdc_reorder_date',
+      //   text: netSuiteFormatdate(body.custrecord_tdc_reorder_date)
+      // })
 
-      reorderItemDetails.setText({
-        fieldId: 'custrecord_tdc_reorder_notification',
-        text: netSuiteFormatdate(body.custrecord_tdc_reorder_notification)
-      })
+      // reorderItemDetails.setText({
+      //   fieldId: 'custrecord_tdc_reorder_notification',
+      //   text: netSuiteFormatdate(body.custrecord_tdc_reorder_notification)
+      // })
 
       if (!!body.custrecord_tdc_end_reorder_date)
         reorderItemDetails.setText({
@@ -535,6 +535,24 @@ define(['N/record', 'N/runtime', 'N/search'], function (
         reorderItemDetails.setValue({
           fieldId: 'name',
           value: itemDetailsName.join('_')
+        });
+        var frequencyDiff = parseInt(body.reOrderFrequency) - parseInt(subscriptionResults[0].getValue({ name: 'custrecord_tdc_auto_reorder_frequency' }));
+        var autoReorderDate = new Date(reorderItemDetails.getValue({ fieldId: 'custrecord_tdc_reorder_date' }));
+        autoReorderDate.setDate(autoReorderDate.getDate() + frequencyDiff);
+        reorderItemDetails.setValue({ fieldId: 'custrecord_tdc_reorder_date', value: autoReorderDate });
+        var notificationDate = new Date(reorderItemDetails.getValue({ fieldId: 'custrecord_tdc_reorder_notification' }));
+        notificationDate.setDate(notificationDate.getDate() + frequencyDiff);
+        reorderItemDetails.setValue({ fieldId: 'custrecord_tdc_reorder_notification', value: notificationDate });
+      }
+      else{
+        reorderItemDetails.setText({
+          fieldId: 'custrecord_tdc_reorder_date',
+          text: netSuiteFormatdate(body.custrecord_tdc_reorder_date)
+        })
+  
+        reorderItemDetails.setText({
+          fieldId: 'custrecord_tdc_reorder_notification',
+          text: netSuiteFormatdate(body.custrecord_tdc_reorder_notification)
         })
       }
 
