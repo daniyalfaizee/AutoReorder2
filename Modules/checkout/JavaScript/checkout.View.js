@@ -105,43 +105,6 @@ define('DME.AutoReorder.checkout.View', [
     },
 
     addItemToAutoReorderSubscription: function (e) {
-      var commonIdString = e.currentTarget.id;
-      var liveOrderInstance = LiveOrderModel.getInstance();
-      var liveOrderOptions = liveOrderInstance.get('options');
-      var itemDetails = JSON.parse(liveOrderOptions.custbody_tdc_reorder_item_details);
-      console.log({itemDetails:itemDetails});
-      var keyObj = Object.keys(itemDetails);
-      if(commonIdString.search("-quantity") == -1 && commonIdString.search("-frequency") == -1 && !e.currentTarget.checked){
-        jQuery(function(){
-          if(jQuery("#" + commonIdString + "-quantity")[0].value != "")
-            jQuery("#" + commonIdString + "-quantity")[0].value = "";
-          if(jQuery("#" + commonIdString + "-frequency")[0].value != "")
-            jQuery("#" + commonIdString + "-frequency")[0].value = "";
-        });
-        if(keyObj.indexOf(commonIdString) > -1)
-          delete itemDetails[keyObj[keyObj.indexOf(commonIdString)]];
-      }
-      else{
-        var itemIdKey = commonIdString.split("-")[0];
-        console.log({keys: keyObj})
-        if(keyObj.indexOf(itemIdKey) == -1)
-          itemDetails[itemIdKey] = {subscribed: false, frequency: null, quantity: null}
-        itemDetails[itemIdKey].subscribed = jQuery("#" + itemIdKey)[0].checked;
-        itemDetails[itemIdKey].frequency = jQuery("#" + itemIdKey + "-frequency")[0].value;
-        itemDetails[itemIdKey].quantity = jQuery("#" + itemIdKey + "-quantity")[0].value;
-      }
-      liveOrderOptions.custbody_tdc_reorder_item_details = JSON.stringify(itemDetails)
-      console.log(itemDetails)
-      liveOrderInstance.set('options', liveOrderOptions);
-      liveOrderInstance.save().then(function(){
-        console.log("save  success");
-      }).fail(function(err){
-        console.log(err);
-      });
-      var liveOrderInstance = LiveOrderModel.getInstance();
-      var liveOrderLines = liveOrderInstance.get("lines");
-      var itemDetailsObj = {}, modelObj= {};
-      console.log({LiveOrderModel:LiveOrderModel.getInstance()})
       var self = this
       var promise = new Promise(function (resolve, reject) {
       var lines = self.model.get('lines').models
@@ -297,18 +260,10 @@ define('DME.AutoReorder.checkout.View', [
             paymentMethodOptions[i].disabled = false
           }
         }
-        
-        paymentMethodOptionsSelector.value == 'creditcard' &&
-        !(document.querySelector('[data-view="CreditCard.Form"]') ||
-          document.querySelector('[data-view="CreditCard.List"]')) &&
-        isAutoReorder
-          ? window.location.reload()
-          : ''
       }
     },
     getEligibleItems: function (self) {
       var lines = LiveOrderModel.getInstance().get('lines').models
-      console.log({lines:lines})
       var eligibleItems = []
       _.each(lines, function (line) {
         var lineItemId = line.id
