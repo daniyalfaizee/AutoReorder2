@@ -45,64 +45,45 @@ define('DME.AutoReorder.checkout.View', [
     },
 
     events: {
-      'click [data-action="subscribe"]': 'addItemToAutoReorderSubscription',
+      // 'click [data-action="subscribe"]': 'addItemToAutoReorderSubscription',
       'click [data-action="cancel-subs"]': 'cancelSubscriptions',
-      'change [data-action="order-frequency"]':
-        'addItemToAutoReorderSubscription',
-      'change [data-action="order-quantity"]':
-        'addItemToAutoReorderSubscription'
+      'click [data-action="confirm-subscription"]': 'confirmSubscription',
+      // 'change [data-action="order-frequency"]':
+      //   'addItemToAutoReorderSubscription',
+      // 'change [data-action="order-quantity"]':
+      //   'addItemToAutoReorderSubscription'
     },
 
     bindings: {},
 
     childViews: {},
 
-    cancelSubscriptions: function(e){
-      var self = this;
-      jQuery(function(){
-        for(var i = 0; i < jQuery('[data-action="subscribe"]').length; i++){
-          if(!!jQuery('[data-action="subscribe"]')[i].checked)
-            jQuery('[data-action="subscribe"]')[i].checked = false;
-          if(jQuery('[data-action="order-quantity"]')[i].value != "")
-            jQuery('[data-action="order-quantity"]')[i].value = "";
-          if(jQuery('[data-action="order-frequency"]')[i].value != "")
-            jQuery('[data-action="order-frequency"]')[i].value = "";
-        }
-        for(var i = 0; i < jQuery('.order-wizard-paymentmethod-selector-module-option').length; i++)
-          if(!!jQuery('.order-wizard-paymentmethod-selector-module-option')[i].disabled)
-            jQuery('.order-wizard-paymentmethod-selector-module-option')[i].disabled = false;
-      });
-      var liveOrderInstance = LiveOrderModel.getInstance();
-      var liveOrderOptions = liveOrderInstance.get('options');
-      liveOrderOptions.custbody_tdc_reorder_item_details = "";
-      liveOrderInstance.set('options', liveOrderOptions);
-      liveOrderInstance.save().then(function(){
-        console.log("save  success");
-      }).fail(function(err){
-        console.log(err);
-      });
-      self.model.get('lines').models = [];
-      // for(var i = 0; i < lines.length; i++){
-      //   // console.log(lines[i][0].get("cartOptionId"))
-      //   var lineOptions = lines[i].attributes.options.models;
-      //   for(var j = 0; j < lineOptions.length; j++){
-      //     if(lineOptions[j].get("cartOptionId") == ("custcol_tdc_reorder_subscribed")){
-      //       lineOptions[j].set("value", {label: 'F', internalid: 'F'});
-      //       lineOptions[j].set("urlParameterName", "custcol_tdc_reorder_subscribed");
-      //     }
-      //     else if(lineOptions[j].get("cartOptionId") == ("custcol_tdc_reorder_sub_details")){
-      //       var resetValue = '{"item-checkbox":false,"item-quantity":"","item-frequency":""}';
-      //       lineOptions[j].set("value", {label: resetValue, internalid: resetValue});
-      //       lineOptions[j].set("urlParameterName", "custcol_tdc_reorder_sub_details");
-      //     }
-      //     lineOptions[j].save().then(function(){
-      //       console.log("save  success");
-      //     }).fail(function(err){
-      //       console.log(err);
-      //     });
-      //   }
-      // }
-    },
+    // cancelSubscriptions: function(e){
+    //   var self = this;
+    //   jQuery(function(){
+    //     for(var i = 0; i < jQuery('[data-action="subscribe"]').length; i++){
+    //       if(!!jQuery('[data-action="subscribe"]')[i].checked)
+    //         jQuery('[data-action="subscribe"]')[i].checked = false;
+    //       if(jQuery('[data-action="order-quantity"]')[i].value != "")
+    //         jQuery('[data-action="order-quantity"]')[i].value = "";
+    //       if(jQuery('[data-action="order-frequency"]')[i].value != "")
+    //         jQuery('[data-action="order-frequency"]')[i].value = "";
+    //     }
+    //     for(var i = 0; i < jQuery('.order-wizard-paymentmethod-selector-module-option').length; i++)
+    //       if(!!jQuery('.order-wizard-paymentmethod-selector-module-option')[i].disabled)
+    //         jQuery('.order-wizard-paymentmethod-selector-module-option')[i].disabled = false;
+    //   });
+    //   var liveOrderInstance = LiveOrderModel.getInstance();
+    //   var liveOrderOptions = liveOrderInstance.get('options');
+    //   liveOrderOptions.custbody_tdc_reorder_item_details = "";
+    //   liveOrderInstance.set('options', liveOrderOptions);
+    //   liveOrderInstance.save().then(function(){
+    //     console.log("save  success");
+    //   }).fail(function(err){
+    //     console.log(err);
+    //   });
+    //   self.model.get('lines').models = [];
+    // },
 
     addItemToAutoReorderSubscription: function (e) {
       var commonIdString = e.currentTarget.id;
@@ -144,16 +125,16 @@ define('DME.AutoReorder.checkout.View', [
       console.log({LiveOrderModel:LiveOrderModel.getInstance()})
       var self = this
       var promise = new Promise(function (resolve, reject) {
-      var lines = self.model.get('lines').models
-      for(var i = 0; i < lines.length; i++){
-        modelObj[lines[i].id] = i;
-      }
+        var lines = self.model.get('lines').models
+        for(var i = 0; i < lines.length; i++){
+          modelObj[lines[i].id] = i;
+        }
         
         _.each(lines, function (line) {
-          
+         
           if (line.id == e.target.id.split('-')[0]) {
             var custcol_tdc_reorder_subscribed =
-              line.attributes.options[  
+              line.attributes.options[
                 line.attributes.options.findIndex(function (el) {
                   return (
                     el.attributes.cartOptionId ==
@@ -193,23 +174,23 @@ define('DME.AutoReorder.checkout.View', [
                 quantity: ""
               }
             // } else {
-            if (e.target.name == 'item-checkbox') {
-              e.target.checked == true
-                ? (self.autoReOrderSubscribedItemDetails[
-                    line.id.toString()
-                  ].subscribed = true)
-                : delete self.autoReOrderSubscribedItemDetails[
-                    line.id.toString()
-                  ]
-            } else if (e.target.name == 'item-frequency') {
-              self.autoReOrderSubscribedItemDetails[
-                line.id.toString()
-              ].frequency = e.target.value < 1 ? 1 : e.target.value
-            } else if (e.target.name == 'item-quantity') {
-              self.autoReOrderSubscribedItemDetails[
-                line.id.toString()
-              ].quantity = e.target.value < 1 ? 1 : e.target.value
-            }
+              if (e.target.name == 'item-checkbox') {
+                e.target.checked == true
+                  ? (self.autoReOrderSubscribedItemDetails[
+                      line.id.toString()
+                    ].subscribed = true)
+                  : delete self.autoReOrderSubscribedItemDetails[
+                      line.id.toString()
+                    ]
+              } else if (e.target.name == 'item-frequency') {
+                self.autoReOrderSubscribedItemDetails[
+                  line.id.toString()
+                ].frequency = e.target.value < 1 ? 1 : e.target.value
+              } else if (e.target.name == 'item-quantity') {
+                self.autoReOrderSubscribedItemDetails[
+                  line.id.toString()
+                ].quantity = e.target.value < 1 ? 1 : e.target.value
+              }
             itemDetailsObj[line.id.toString()] = self.autoReOrderSubscribedItemDetails[line.id.toString()];
             // }
             // console.log(self.autoReOrderSubscribedItemDetails)
@@ -276,6 +257,7 @@ define('DME.AutoReorder.checkout.View', [
     },
 
     disablePaymentMethods: function (isAutoReorder) {
+      console.log({isAutoReorder:isAutoReorder})
       $(document).ready(abc)
       // var self = this
       function abc() {
@@ -362,15 +344,116 @@ define('DME.AutoReorder.checkout.View', [
       return eligibleItems
     },
 
+    cancelSubscriptions: function(e){
+      jQuery(function(){
+        for(var i = 0; i < jQuery('[data-action="subscribe"]').length; i++){
+          if(!!jQuery('[data-action="subscribe"]')[i].checked)
+            jQuery('[data-action="subscribe"]')[i].checked = false;
+          if(jQuery('[data-action="order-quantity"]')[i].value != "")
+            jQuery('[data-action="order-quantity"]')[i].value = "";
+          if(jQuery('[data-action="order-frequency"]')[i].value != "")
+            jQuery('[data-action="order-frequency"]')[i].value = "";
+        }
+        for(var i = 0; i < jQuery('.order-wizard-paymentmethod-selector-module-option').length; i++)
+          if(!!jQuery('.order-wizard-paymentmethod-selector-module-option')[i].disabled)
+            jQuery('.order-wizard-paymentmethod-selector-module-option')[i].disabled = false;
+      });
+      var liveOrderInstance = LiveOrderModel.getInstance();
+      var liveOrderOptions = liveOrderInstance.get('options');
+      liveOrderOptions.custbody_tdc_reorder_item_details = "";
+      liveOrderInstance.set('options', liveOrderOptions);
+      liveOrderInstance.save().then(function(){
+        console.log("save success");
+      }).fail(function(err){
+        console.log(err);
+      });
+    },
+
+    confirmSubscription: function(e){
+      var lineItemObj = {};
+      var self = this;
+      jQuery(function(){
+        var flag = true;
+        for(i = 0; i < jQuery('[name="auto-reorder-item-checkbox"]').length; i++){
+          var commonIdString = jQuery('[name="auto-reorder-item-checkbox"]')[i].id;
+          if(
+            !!jQuery('#' + commonIdString)[0].checked == !!jQuery('#' + commonIdString + '-quantity')[0].value && 
+            !!jQuery('#' + commonIdString)[0].checked == !!jQuery('#' + commonIdString + '-frequency')[0].value
+          ){
+            if(Object.keys(lineItemObj).indexOf(commonIdString) == -1 && !!jQuery('#' + commonIdString)[0].checked){
+              lineItemObj[commonIdString] = {
+                subscribed: true,
+                frequency: jQuery('#' + commonIdString + '-frequency')[0].value,
+                quantity:jQuery('#' + commonIdString + '-quantity')[0].value
+              }
+            }
+          }
+          else if(!!flag)
+            flag = false;
+        }
+        if(!!flag){
+          //  && Object.keys(lineItemObj).length > 0
+          alert("Request Submission Successful.");
+        }
+        else
+          alert("WARNING!!! There might be problems processing your Subscription request because you might have entered incorrect or incomplete Information. Please review the Re-Order Form and make sure you've entered all the necessary Information correctly.");
+        if(Object.keys(lineItemObj).length > 0){
+          var liveOrderInstance = LiveOrderModel.getInstance();
+          var liveOrderOptions = liveOrderInstance.get('options');
+          liveOrderOptions.custbody_tdc_reorder_item_details = JSON.stringify(lineItemObj);
+          liveOrderInstance.set('options', liveOrderOptions);
+          liveOrderInstance.save().then(function(){
+            // console.log("save success");
+            localStorage.setItem("subscriptionDetails", JSON.stringify(lineItemObj));
+          }).fail(function(err){
+            console.log(err);
+          });
+          console.log({ newLineItemObj: LiveOrderModel.getInstance() })
+        }
+        self.disablePaymentMethods(Object.keys(lineItemObj).length != 0)
+      });
+    },
+
     //@method getContext @return DME.AutoReorder.checkout.View.Context
     getContext: function getContext() {
       //@class DME.AutoReorder.checkout.View.Context
 
+      if(!!localStorage.subscriptionDetails){
+        var self = this;
+        var subscriptionObj = JSON.parse(localStorage.subscriptionDetails);
+        var subscriptionKeys = Object.keys(subscriptionObj);
+        jQuery(function(){
+          for(var i = 0; i < subscriptionKeys.length; i++){
+            for(var j = 0; j < (jQuery('[name="auto-reorder-item-checkbox"]').length / 2); j++){
+              if(subscriptionKeys[i] == jQuery('[name="auto-reorder-item-checkbox"]')[j].id){
+                var commonIdString = jQuery('[name="auto-reorder-item-checkbox"]')[j].id;
+                jQuery('#' + commonIdString)[0].checked = true;
+                jQuery('#' + commonIdString + '-quantity')[0].value = subscriptionObj[subscriptionKeys[i]].quantity;
+                jQuery('#' + commonIdString + '-frequency')[0].value = subscriptionObj[subscriptionKeys[i]].frequency;
+                jQuery('.' + commonIdString + '-mobile')[0].checked = true;
+                jQuery('.' + commonIdString + '-quantity-mobile')[0].value = subscriptionObj[subscriptionKeys[i]].quantity;
+                jQuery('.' + commonIdString + '-frequency-mobile')[0].value = subscriptionObj[subscriptionKeys[i]].frequency;
+              }
+            }
+          }
+          var liveOrderInstance = LiveOrderModel.getInstance();
+          var liveOrderOptions = liveOrderInstance.get('options');
+          liveOrderOptions.custbody_tdc_reorder_item_details = JSON.stringify(subscriptionObj);
+          liveOrderInstance.set('options', liveOrderOptions);
+          liveOrderInstance.save().then(function(){
+            // console.log("save success");
+            localStorage.setItem("subscriptionDetails", JSON.stringify(subscriptionObj));
+          }).fail(function(err){
+            console.log(err);
+          });
+          self.disablePaymentMethods(subscriptionKeys.length != 0);
+        });
+      }
       this.message = this.message || 'Hello World!!'
       var eligibleItems = this.getEligibleItems(this)
-      console.log({eligibleItems:this.autoReOrderSubscribedItemDetails})
 
       this.setItemDetails()
+      console.log({ getInstance: LiveOrderModel.getInstance() })
       return {
         message: this.message,
         eligibleItems: eligibleItems.length ? eligibleItems : false

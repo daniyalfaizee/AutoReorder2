@@ -62,7 +62,7 @@
                 <td>{{ itemSku }}</td>
                 <td>{{ itemPrice }}</td>
                 <td>
-                  <input type="checkbox" name="item-checkbox" id="{{
+                  <input type="checkbox" class="addSubscribecheckbox" name="auto-reorder-item-checkbox" id="{{
                     lineItemId
                   }}" data-action="subscribe"
                   {{#if
@@ -88,6 +88,7 @@
                 </td>
               </tr>
               {{/each}}
+              <tr><td colspan="6" style=""><button data-action="confirm-subscription">Confirm Subscription</button></td></tr>
             </tbody>
             <!-- <span style="padding:12px;font-size:0.5rem"><a href="/reorder-terms-and-conditions">*Terms and Conditions Apply</a></span> -->
           </table>
@@ -124,8 +125,8 @@
             <div style="display: flex; margin-top: 4px">
               <div>Add To Subscription:</div>
               <div style="margin: 2px; margin-left: 5px">
-                <input type="checkbox" class="addSubscribecheckbox"
-                name="item-checkbox" id="{{ lineItemId }}-checkbox"
+                <input type="checkbox" class="addSubscribecheckbox {{ lineItemId }}-mobile"
+                name="auto-reorder-item-checkbox" id="{{ lineItemId }}"
                 data-action="subscribe" {{#if isSubscribed}} checked="true"
                 {{/if }}>
               </div>
@@ -136,7 +137,7 @@
               >
                 <div>Frequency (In Days):</div>
                 <div style="margin: 2px; margin-left: 5px">
-                  <input type="number" style="width:70px" name="item-frequency"
+                  <input type="number" style="width:70px" name="item-frequency" class="{{ lineItemId }}-frequency-mobile"
                   id="{{ lineItemId }}-frequency" data-action="order-frequency"
                   {{#if isSubscribed}} value="{{ frequency }}" {{/if}} />
                 </div>
@@ -151,6 +152,7 @@
                     style="width: 70px"
                     name="item-quantity"
                     id="{{ lineItemId }}-quantity"
+                    class="{{ lineItemId }}-quantity-mobile"
                     data-action="order-quantity"
                     {{#if
                     isSubscribed}}

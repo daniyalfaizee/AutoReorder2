@@ -147,6 +147,9 @@ define('DME.AutoReorder.AutoReorder.View', [
     //@class DME.AutoReorder.AutoReorder.View.Context
     this.message = this.message || 'This Item is Available for Re-Order!!'
     // console.log(this.isMatrixItem, this.selectedMatrixChilds);
+    console.log({discount: this.isMatrixItem
+      ? this.pdp.getSelectedMatrixChilds()[0].custitem_auto_reorder_discount
+      : this.itemInfo.item.custitem_auto_reorder_discount})
     return {
       message: this.message,
       isReOrderEligible: this.isMatrixItem
@@ -154,7 +157,9 @@ define('DME.AutoReorder.AutoReorder.View', [
           ? this.selectedMatrixChilds[0].custitem_tdc_auto_reorder_eligible
           : false
         : this.itemInfo.item.custitem_tdc_auto_reorder_eligible,
-      discount: this.itemInfo.custitem_auto_reorder_discount,
+      discount: this.isMatrixItem
+      ? this.pdp.getSelectedMatrixChilds()[0].custitem_auto_reorder_discount
+      : this.itemInfo.item.custitem_auto_reorder_discount,
       isMatrixSubItemEligible: !!this.isMatrixSubItemEligible,
       isMatrixItem: !!this.isMatrixItem,
       isSubscribed: !!this.isSubscribed

@@ -33,42 +33,44 @@ define('DME.AutoReorder.checkout', [
         })
 
         promise.then(function (lineItems) {
-          cart.on("beforeSubmit", function(){
-            var liveOrderOptions = JSON.parse(LiveOrderModel.getInstance().get('options').custbody_tdc_reorder_item_details);
-            // console.log(liveOrderOptions[Object.keys(liveOrderOptions)[0]]);
-            console.log({liveOrderOptions:liveOrderOptions});
-            var flag = false;
-            for(var i = 0; i < Object.keys(liveOrderOptions).length; i++){
-              var cartItem = liveOrderOptions[Object.keys(liveOrderOptions)[i]];
-              console.log({ cartItem: cartItem })
-              if(
-                !!cartItem.subscribed && (!cartItem.frequency || !cartItem.quantity)
-                ||
-                !cartItem.subscribed && (!!cartItem.frequency || !!cartItem.quantity)
-              ){
-                flag = true;
-                break;
-              }
-            }
-            if(!!flag){
-              var validateMessage = confirm('Your Subscription request will be denied because you did not provide all the required Information. Click "Ok" to place your Order without Subscribing or "Cancel" to stop the Order placement.');
-              if(!!validateMessage){
-                console.log("you clicked ok");
-                return jQuery.Deferred().resolve();
-              }
-              else{
-                console.log("you clicked cancel");
-                return jQuery.Deferred().reject();
-              }
-            }
-            else{
-              console.log("everything ok");
-              return jQuery.Deferred().reject();
-            }
-          });
+          // cart.on("beforeSubmit", function(){
+          //   var liveOrderOptions = JSON.parse(LiveOrderModel.getInstance().get('options').custbody_tdc_reorder_item_details);
+          //   // console.log(liveOrderOptions[Object.keys(liveOrderOptions)[0]]);
+          //   console.log({liveOrderOptions:liveOrderOptions});
+          //   var flag = false;
+          //   for(var i = 0; i < Object.keys(liveOrderOptions).length; i++){
+          //     var cartItem = liveOrderOptions[Object.keys(liveOrderOptions)[i]];
+          //     console.log({ cartItem: cartItem })
+          //     if(
+          //       !!cartItem.subscribed && (!cartItem.frequency || !cartItem.quantity)
+          //       ||
+          //       !cartItem.subscribed && (!!cartItem.frequency || !!cartItem.quantity)
+          //     ){
+          //       flag = true;
+          //       break;
+          //     }
+          //   }
+          //   console.log({localStorage: localStorage});
+          //   if(!!flag){
+          //     var validateMessage = confirm('Your Subscription request will be denied because you did not provide all the required Information. Click "Ok" to place your Order without Subscribing or "Cancel" to stop the Order placement.');
+          //     if(!!validateMessage){
+          //       console.log("you clicked ok");
+          //       return jQuery.Deferred().reject();//resolve();
+          //     }
+          //     else{
+          //       console.log("you clicked cancel");
+          //       return jQuery.Deferred().reject();
+          //     }
+          //   }
+          //   else{
+          //     console.log("everything ok");
+          //     return jQuery.Deferred().reject();
+          //   }
+          // });
           cart.on("afterSubmit", function(){
-            localStorage.removeItem("subscriptionDetails");
+            localStorage.setItem("subscriptionDetails", "");
             console.log({localStorage: localStorage});
+            console.log({ LiveOrderModel: LiveOrderModel.getInstance() })
             return jQuery.Deferred().resolve();
           });
           

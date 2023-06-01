@@ -183,6 +183,7 @@ define('DME.AutoReOrder.FormView', [
         this.pdp.setOption('custcol_tdc_reorder_subscribed', 'F')
         this.pdp.setOption('custcol_tdc_reorder_sub_details', '')
       } else {
+        console.log('in else');
         this.pdp.setOption('custcol_tdc_reorder_subscribed', 'T')
         this.pdp.setOption(
           'custcol_tdc_reorder_sub_details',
@@ -275,7 +276,7 @@ define('DME.AutoReOrder.FormView', [
       self.formModel.get('item-checkbox')
         ? el.classList.remove('autoreorder-hide-fields')
         : el.classList.add('autoreorder-hide-fields')
-      // self.$el[0].getElementsByClassName('autoreorder-show-items')[0] = el
+        // self.$el[0].getElementsByClassName('autoreorder-show-items')[0] = el
       var el2 = self.$el[0].getElementsByClassName(
         'autoreorder-form-submit-button'
       )[0]
@@ -299,9 +300,9 @@ define('DME.AutoReOrder.FormView', [
         var afterSave =
           subscriptionDetails[this.getCurrentItem()]
             .custcol_tdc_reorder_subscribed
-        // if (afterSave) {
-        //   this.saveForm()
-        // }
+            // if (afterSave) {
+            //   this.saveForm()
+            // }
       } else if (this.isMatrixItem) {
         var afterSave = false
       } else {
@@ -317,11 +318,11 @@ define('DME.AutoReOrder.FormView', [
       custitem_auto_reorder_discount: this.isMatrixItem
         ? this.pdp.getSelectedMatrixChilds()[0].custitem_auto_reorder_discount
         : this.itemInfo.item.custitem_auto_reorder_discount,
-      isReOrderEligible:
+        isReOrderEligible:
         this.isMatrixItem && this.pdp.getSelectedMatrixChilds().length == 1
-          ? this.pdp.getSelectedMatrixChilds()[0]
-              .custitem_tdc_auto_reorder_eligible
-          : this.itemInfo.item.custitem_tdc_auto_reorder_eligible
+        ? this.pdp.getSelectedMatrixChilds()[0]
+            .custitem_tdc_auto_reorder_eligible
+        : this.itemInfo.item.custitem_tdc_auto_reorder_eligible
     }
   }
   return AutoReorderFormView

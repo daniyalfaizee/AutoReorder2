@@ -76,13 +76,13 @@ define('DME.AutoReorder.AutoReorder', [
         }
 
 
-        layout.registerView('AutoReorder.Form.View', function () {
-          return new AutoReorderFormView({
-            container: container,
-            pdp: pdp,
-            cart: cart
+          layout.registerView('AutoReorder.Form.View', function () {
+            return new AutoReorderFormView({
+              container: container,
+              pdp: pdp,
+              cart: cart
+            })
           })
-        })
       }
     }
   }

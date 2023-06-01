@@ -6,7 +6,7 @@ define('DME.AutoReorder.AutoReorderItemInfo', [
 
   return {
     mountToApp: function mountToApp(container) {
-      
+
       var is_auto_reorder_enabled = container
         .getComponent('Environment')
         .getConfig('autoreorderapp.config')
