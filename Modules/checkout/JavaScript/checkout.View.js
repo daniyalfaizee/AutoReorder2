@@ -48,6 +48,7 @@ define('DME.AutoReorder.checkout.View', [
       // 'click [data-action="subscribe"]': 'addItemToAutoReorderSubscription',
       'click [data-action="cancel-subs"]': 'cancelSubscriptions',
       'click [data-action="confirm-subscription"]': 'confirmSubscription',
+      'click [data-action="subscribe"]': 'updateSubscriptionInfo',
       // 'change [data-action="order-frequency"]':
       //   'addItemToAutoReorderSubscription',
       // 'change [data-action="order-quantity"]':
@@ -344,6 +345,18 @@ define('DME.AutoReorder.checkout.View', [
       return eligibleItems
     },
 
+    updateSubscriptionInfo: function(e){
+      var commonIdString = e.currentTarget.id;
+      if(commonIdString.search("-quantity") == -1 && commonIdString.search("-frequency") == -1 && !e.currentTarget.checked){
+        jQuery(function(){
+          if(jQuery("#" + commonIdString + "-quantity")[0].value != "")
+            jQuery("#" + commonIdString + "-quantity")[0].value = "";
+          if(jQuery("#" + commonIdString + "-frequency")[0].value != "")
+            jQuery("#" + commonIdString + "-frequency")[0].value = "";
+        });
+      }
+    },
+
     cancelSubscriptions: function(e){
       jQuery(function(){
         for(var i = 0; i < jQuery('[data-action="subscribe"]').length; i++){
@@ -373,30 +386,37 @@ define('DME.AutoReorder.checkout.View', [
       var lineItemObj = {};
       var self = this;
       jQuery(function(){
-        var flag = true;
+        var flag = true, errorMsg = "";
         for(i = 0; i < jQuery('[name="auto-reorder-item-checkbox"]').length; i++){
           var commonIdString = jQuery('[name="auto-reorder-item-checkbox"]')[i].id;
-          if(
-            !!jQuery('#' + commonIdString)[0].checked == !!jQuery('#' + commonIdString + '-quantity')[0].value && 
-            !!jQuery('#' + commonIdString)[0].checked == !!jQuery('#' + commonIdString + '-frequency')[0].value
-          ){
+          var itemFreq = jQuery('#' + commonIdString + '-frequency')[0].value;
+          var itemQuan = jQuery('#' + commonIdString + '-quantity')[0].value;
+          if(!!jQuery('#' + commonIdString)[0].checked == !!itemQuan && !!jQuery('#' + commonIdString)[0].checked == !!itemFreq){
             if(Object.keys(lineItemObj).indexOf(commonIdString) == -1 && !!jQuery('#' + commonIdString)[0].checked){
-              lineItemObj[commonIdString] = {
-                subscribed: true,
-                frequency: jQuery('#' + commonIdString + '-frequency')[0].value,
-                quantity:jQuery('#' + commonIdString + '-quantity')[0].value
+              console.log({ itemQuan: parseInt(itemQuan), itemFreq: parseInt(itemFreq) });
+              if(parseFloat(itemQuan) != parseInt(itemQuan) || parseFloat(itemFreq) != parseInt(itemFreq)){
+                flag = false;
+                errorMsg = "Decimal values are not accepted. Please enter valid values for Frequency and Quantity.";
               }
+              else if(parseInt(itemQuan) < 1 || parseInt(itemFreq) < 1){
+                flag = false;
+                errorMsg = "Frequency and Quantity must be at least 1.";
+              }
+              else
+                lineItemObj[commonIdString] = { subscribed: true, frequency: itemFreq, quantity: itemQuan }
             }
           }
-          else if(!!flag)
+          else if(!!flag){
             flag = false;
+            errorMsg = "WARNING!!! There might be problems processing your Subscription request because you have entered incomplete Information. Please review the Re-Order Form and make sure you've entered all the necessary Information correctly.";
+          }
         }
         if(!!flag){
           //  && Object.keys(lineItemObj).length > 0
           alert("Request Submission Successful.");
         }
         else
-          alert("WARNING!!! There might be problems processing your Subscription request because you might have entered incorrect or incomplete Information. Please review the Re-Order Form and make sure you've entered all the necessary Information correctly.");
+          alert(errorMsg);
         if(Object.keys(lineItemObj).length > 0){
           var liveOrderInstance = LiveOrderModel.getInstance();
           var liveOrderOptions = liveOrderInstance.get('options');
