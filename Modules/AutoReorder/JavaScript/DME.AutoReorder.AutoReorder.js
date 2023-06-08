@@ -3,12 +3,14 @@ define('DME.AutoReorder.AutoReorder', [
   'jQuery',
   'DME.AutoReOrder.FormView',
   'DME.AutoReOrder.CartView',
+  'DME.AutoReOrder.PDPView',
   'LiveOrder.Model'
 ], function (
   AutoReorderView,
   jQuery,
   AutoReorderFormView,
   AutoReOrderCartView,
+  AutoReOrderPDPView,
   LiveOrderModel
 ) {
   'use strict'
@@ -42,11 +44,11 @@ define('DME.AutoReorder.AutoReorder', [
             });
           });
           pdp.addChildViews('ProductDetails.Full.View', {
-            'MainActionView': {
+            MainActionView: {
               'AutoReorder.View': {
                 childViewIndex: 1,
                 childViewConstructor: function () {
-                  return new AutoReorderView({
+                  return new AutoReOrderPDPView({
                     container: container,
                     pdp: pdp,
                     cart: cart,
@@ -56,33 +58,33 @@ define('DME.AutoReorder.AutoReorder', [
               }
             }
           })
+          
 
-          if (cart) {
-            cart.getLines().then(function (lines) {
-              cart.on('beforeShowContent', function () {
-                cart.addChildViews(cart.CART_VIEW, {
-                  'Item.Tax.Info': {
-                    'AutoReOrder.CartView': {
-                      childViewIndex: 1,
-                      childViewConstructor: function () {
-                        return new AutoReOrderCartView({ cartItems: lines })
-                      }
-                    }
-                  }
-                })
-              })
-            })
-          }
+          // if (cart) {
+          //   cart.getLines().then(function (lines) {
+          //     cart.on('beforeShowContent', function () {
+          //       cart.addChildViews(cart.CART_VIEW, {
+          //         'Item.Tax.Info': {
+          //           'AutoReOrder.CartView': {
+          //             childViewIndex: 1,
+          //             childViewConstructor: function () {
+          //               return new AutoReOrderCartView({ cartItems: lines })
+          //             }
+          //           }
+          //         }
+          //       })
+          //     })
+          //   })
+          // }
         }
 
-
-          layout.registerView('AutoReorder.Form.View', function () {
-            return new AutoReorderFormView({
-              container: container,
-              pdp: pdp,
-              cart: cart
-            })
-          })
+        // layout.registerView('AutoReorder.Form.View', function () {
+        //   return new AutoReorderFormView({
+        //     container: container,
+        //     pdp: pdp,
+        //     cart: cart
+        //   })
+        // })
       }
     }
   }

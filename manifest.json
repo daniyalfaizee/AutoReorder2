@@ -2,7 +2,7 @@
     "name": "AutoReorder",
     "fantasyName": "Item Auto-Reorder",
     "vendor": "DME",
-    "version": "0.0.2",
+    "version": "0.0.4",
     "type": "extension",
     "target": "SCA,SCS",
     "target_version": {
@@ -66,7 +66,8 @@
                     "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_collection_view.tpl",
                     "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_item_edit_view.tpl",
                     "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_item_list_view.tpl",
-                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_row_view.tpl"
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_row_view.tpl",
+                    "Modules/AutoReorder/Templates/dme_autoreorder_pdp_view.tpl"
                 ]
             },
             "myaccount": {
@@ -87,7 +88,8 @@
                     "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_collection_view.tpl",
                     "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_item_edit_view.tpl",
                     "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_item_list_view.tpl",
-                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_row_view.tpl"
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_row_view.tpl",
+                    "Modules/AutoReorder/Templates/dme_autoreorder_pdp_view.tpl"
                 ]
             },
             "checkout": {
@@ -108,7 +110,8 @@
                     "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_collection_view.tpl",
                     "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_item_edit_view.tpl",
                     "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_item_list_view.tpl",
-                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_row_view.tpl"
+                    "Modules/AutoReorderItemInfo/Templates/dme_autoreorder_item_info_row_view.tpl",
+                    "Modules/AutoReorder/Templates/dme_autoreorder_pdp_view.tpl"
                 ]
             }
         }
@@ -150,7 +153,8 @@
                     "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.Collection.js",
                     "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.CollectionView.js",
                     "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.ItemListView.js",
-                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReOrderSubscriptionDetailView.js"
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReOrderSubscriptionDetailView.js",
+                    "Modules/AutoReorder/JavaScript/DME.AutoReOrder.PDPView.js"
                 ]
             },
             "myaccount": {
@@ -183,7 +187,8 @@
                     "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.Collection.js",
                     "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.CollectionView.js",
                     "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.ItemListView.js",
-                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReOrderSubscriptionDetailView.js"
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReOrderSubscriptionDetailView.js",
+                    "Modules/AutoReorder/JavaScript/DME.AutoReOrder.PDPView.js"
                 ]
             },
             "checkout": {
@@ -216,7 +221,8 @@
                     "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.Collection.js",
                     "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.CollectionView.js",
                     "Modules/AutoReorderItemInfo/JavaScript/DME.AutoReorder.AutoReorderItemInfo.ItemListView.js",
-                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReOrderSubscriptionDetailView.js"
+                    "Modules/AutoReorderSubscriptionInfo/JavaScript/AutoReOrderSubscriptionDetailView.js",
+                    "Modules/AutoReorder/JavaScript/DME.AutoReOrder.PDPView.js"
                 ]
             }
         }
@@ -226,6 +232,8 @@
         "files": [
             "Modules/AutoReorder/SuiteScript2/AutoReorder.Service.ss",
             "Modules/AutoReorder/SuiteScript2/AutoReorder.Model.js",
+            "Modules/checkout/SuiteScript2/AutoReorder.Checkout.Service.ss",
+            "Modules/checkout/SuiteScript2/AutoReorder.Checkout.Model.js",
             "Modules/AutoReorderSubscriptionInfo/SuiteScript2/AutoReorderSubscriptionInfo.Service.ss",
             "Modules/AutoReorderSubscriptionInfo/SuiteScript2/AutoReorder.SubscriptionInfo.Model.js",
             "Modules/AutoReorderItemInfo/SuiteScript2/AutoReorderItemInfo.Service.ss",

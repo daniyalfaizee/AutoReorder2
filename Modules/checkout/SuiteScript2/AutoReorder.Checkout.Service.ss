@@ -2,7 +2,7 @@
 * @NApiVersion 2.x
 * @NModuleScope Public
 */
-define(['./AutoReorder.Model'],function (AutoReorderModel) {
+define(['./AutoReorder.Checkout.Model'],function (AutoReorderModel) {
     "use strict";
     
     function service(context) {

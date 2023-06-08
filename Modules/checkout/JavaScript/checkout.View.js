@@ -25,6 +25,7 @@ define('DME.AutoReorder.checkout.View', [
     template: dme_autoreorder_checkout_tpl,
 
     initialize: function (options) {
+      console.log({opt: options})
       WizardModule.prototype.initialize.apply(this, arguments)
       var self = this
       this.autoReOrderSubscribedItemDetails = {}
@@ -297,37 +298,38 @@ define('DME.AutoReorder.checkout.View', [
         var lineItemId = line.id
         var item = line.get('item')
 
-        var isitem_reorder_eligible = item.get(
-          'custitem_tdc_auto_reorder_eligible'
-        )
-        var isSubscribed = _.find(
-          line.attributes.options.models,
-          function (model) {
-            return model.get('cartOptionId') == 'custcol_tdc_reorder_subscribed'
-          }
-        )
+        var isitem_reorder_eligible = item.id.toString();
+        // .get(
+        //   'custitem_tdc_auto_reorder_eligible'
+        // )
+        // var isSubscribed = _.find(
+        //   line.attributes.options.models,
+        //   function (model) {
+        //     return model.get('cartOptionId') == 'custcol_tdc_reorder_subscribed'
+        //   }
+        // )
 
-        if (isSubscribed) {
-          isSubscribed = isSubscribed.attributes.value.internalid
-        }
+        // if (isSubscribed) {
+        //   isSubscribed = isSubscribed.attributes.value.internalid
+        // }
 
-        if (isSubscribed == 'T') {
-          var subscriptionDetails = JSON.parse(
-            _.find(line.attributes.options.models, function (model) {
-              return (
-                model.get('cartOptionId') == 'custcol_tdc_reorder_sub_details'
-              )
-            }).attributes.value.internalid
-          )
-          var frequency = subscriptionDetails['item-frequency']
-          var quantity = subscriptionDetails['item-quantity']
-        }
-        self.autoReOrderSubscribedItemDetails[lineItemId] = {
-          subscribed: isSubscribed == 'T' ? true : false,
-          frequency: frequency,
-          quantity: quantity
-        }
-        if (isitem_reorder_eligible) {
+        // if (isSubscribed == 'T') {
+        //   var subscriptionDetails = JSON.parse(
+        //     _.find(line.attributes.options.models, function (model) {
+        //       return (
+        //         model.get('cartOptionId') == 'custcol_tdc_reorder_sub_details'
+        //       )
+        //     }).attributes.value.internalid
+        //   )
+        //   var frequency = subscriptionDetails['item-frequency']
+        //   var quantity = subscriptionDetails['item-quantity']
+        // }
+        // self.autoReOrderSubscribedItemDetails[lineItemId] = {
+        //   subscribed: isSubscribed == 'T' ? true : false,
+        //   frequency: frequency,
+        //   quantity: quantity
+        // }
+        if (self.options.model.indexOf(isitem_reorder_eligible) > -1) {
           eligibleItems.push({
             itemName: item.get('_name'),
             itemSku: item.get('_sku'),
@@ -335,9 +337,9 @@ define('DME.AutoReorder.checkout.View', [
             itemPrice: item.get('onlinecustomerprice_detail')
               .onlinecustomerprice_formatted,
             itemImages: item.get('keyMapping_images'),
-            isSubscribed: isSubscribed == 'T' ? true : false,
-            frequency: frequency,
-            quantity: quantity
+            // isSubscribed: isSubscribed == 'T' ? true : false,
+            // frequency: frequency,
+            // quantity: quantity
           })
         }
       })
@@ -387,7 +389,7 @@ define('DME.AutoReorder.checkout.View', [
       var self = this;
       jQuery(function(){
         var flag = true, errorMsg = "";
-        for(i = 0; i < jQuery('[name="auto-reorder-item-checkbox"]').length; i++){
+        for(var i = 0; i < jQuery('[name="auto-reorder-item-checkbox"]').length; i++){
           var commonIdString = jQuery('[name="auto-reorder-item-checkbox"]')[i].id;
           var itemFreq = jQuery('#' + commonIdString + '-frequency')[0].value;
           var itemQuan = jQuery('#' + commonIdString + '-quantity')[0].value;

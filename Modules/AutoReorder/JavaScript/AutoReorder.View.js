@@ -22,12 +22,10 @@ define('DME.AutoReorder.AutoReorder.View', [
     var self = this
     this.pdp = options.pdp
     this.container = options.container
-    userInfo = options.userInfo;
     this.pdp.setOption('custcol_tdc_reorder_subscribed', 'F')
     this.pdp.setOption('custcol_tdc_reorder_sub_details', '')
     this.itemInfo = this.pdp.getItemInfo()
-    this.model = new AutoReorderSS2Model();
-    this.model.set("customerInfo", userInfo.id);
+    this.model = new AutoReorderSS2Model()
     this.cart = options.cart
     this.template = dme_autoreorder_autoreorder_tpl
 
@@ -35,31 +33,12 @@ define('DME.AutoReorder.AutoReorder.View', [
 				(you'll need to deploy and activate the extension first)
 			*/
 
-    // console.log('test', self.pdp.getSelectedMatrixChilds({}))
+    console.log('test', self.pdp.getSelectedMatrixChilds({}))
     if (this.itemInfo.item.itemoptions_detail.matrixtype) {
       self.isMatrixItem = true
       this.pdp.on('afterOptionSelection', function (e) {
         self.isMatrixSubItemEligible = self.matrixItemsCheck()
-        if(!!self.isMatrixSubItemEligible && !!userInfo.login){
-          self.model.set("productInfo", self.pdp.getSelectedMatrixChilds()[0].internalid);
-          self.model.fetch().then(function(){
-            self.isSubscribed = self.model.get("isSubscribed");
-            self.render();
-          });
-        }
-        else{
-          self.isSubscribed = false;
-          self.render();
-        }
-      })
-    }
-    else if(!!this.itemInfo.item.custitem_tdc_auto_reorder_eligible && !!userInfo.login){
-      this.pdp.on('afterShowContent', function(){
-        self.model.set("productInfo", self.itemInfo.item.internalid);
-        self.model.fetch().then(function(){
-          self.isSubscribed = self.model.get("isSubscribed");
-          self.render();
-        });
+        self.render()
       })
     }
   }
@@ -147,9 +126,6 @@ define('DME.AutoReorder.AutoReorder.View', [
     //@class DME.AutoReorder.AutoReorder.View.Context
     this.message = this.message || 'This Item is Available for Re-Order!!'
     // console.log(this.isMatrixItem, this.selectedMatrixChilds);
-    console.log({discount: this.isMatrixItem
-      ? this.pdp.getSelectedMatrixChilds()[0].custitem_auto_reorder_discount
-      : this.itemInfo.item.custitem_auto_reorder_discount})
     return {
       message: this.message,
       isReOrderEligible: this.isMatrixItem
@@ -157,12 +133,9 @@ define('DME.AutoReorder.AutoReorder.View', [
           ? this.selectedMatrixChilds[0].custitem_tdc_auto_reorder_eligible
           : false
         : this.itemInfo.item.custitem_tdc_auto_reorder_eligible,
-      discount: this.isMatrixItem
-      ? this.pdp.getSelectedMatrixChilds()[0].custitem_auto_reorder_discount
-      : this.itemInfo.item.custitem_auto_reorder_discount,
+      discount: this.itemInfo.custitem_auto_reorder_discount,
       isMatrixSubItemEligible: !!this.isMatrixSubItemEligible,
-      isMatrixItem: !!this.isMatrixItem,
-      isSubscribed: !!this.isSubscribed
+      isMatrixItem: !!this.isMatrixItem
     }
   }
 

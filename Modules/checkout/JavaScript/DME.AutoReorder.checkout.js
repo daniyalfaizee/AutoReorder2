@@ -1,8 +1,8 @@
 define('DME.AutoReorder.checkout', [
   'DME.AutoReorder.checkout.View',
   'OrderWizard.Module.ShowPayments',
-  'LiveOrder.Model'
-], function (checkoutView, OrderWizardModuleShowPayments, LiveOrderModel) {
+  'DME.AutoReorder.checkout.Model'
+], function (checkoutView, OrderWizardModuleShowPayments, AutoReorderCheckoutModel) {
   'use strict'
 
   return {
@@ -16,6 +16,7 @@ define('DME.AutoReorder.checkout', [
       /** @type {LayoutComponent} */
       var checkout = container.getComponent('Checkout')
       var cart = container.getComponent('Cart')
+      var userComponent = container.getComponent("UserProfile");
       // cart.setTransactionBodyField({
       //   fieldId: 'custbody_tdc_reorder_item_details',
       //   type: 'string',
@@ -25,55 +26,23 @@ define('DME.AutoReorder.checkout', [
      
 
       if (checkout && cart) {
+        var cartItems = [];
         var promise = new Promise(function (resolve, reject) {
-          cart.getLines().then(function (lines) {
+          jQuery.when(cart.getLines(), userComponent.getUserProfile()).done(function (lines, profile) {
             var lineItems = lines
-            resolve(lineItems)
+            for(var i = 0; i < lineItems.length; i++)
+              cartItems.push(lineItems[i].item.internalid);
+            var model = new AutoReorderCheckoutModel();
+            var userInfo = {id: "", login: ""};
+            userInfo.id = profile.internalid;
+            userInfo.login = profile.isloggedin;
+            model.set("customerInfo", userInfo.id);
+            model.set("productInfo", JSON.stringify(cartItems));
+            resolve(model.fetch())
           })
         })
 
         promise.then(function (lineItems) {
-          // cart.on("beforeSubmit", function(){
-          //   var liveOrderOptions = JSON.parse(LiveOrderModel.getInstance().get('options').custbody_tdc_reorder_item_details);
-          //   // console.log(liveOrderOptions[Object.keys(liveOrderOptions)[0]]);
-          //   console.log({liveOrderOptions:liveOrderOptions});
-          //   var flag = false;
-          //   for(var i = 0; i < Object.keys(liveOrderOptions).length; i++){
-          //     var cartItem = liveOrderOptions[Object.keys(liveOrderOptions)[i]];
-          //     console.log({ cartItem: cartItem })
-          //     if(
-          //       !!cartItem.subscribed && (!cartItem.frequency || !cartItem.quantity)
-          //       ||
-          //       !cartItem.subscribed && (!!cartItem.frequency || !!cartItem.quantity)
-          //     ){
-          //       flag = true;
-          //       break;
-          //     }
-          //   }
-          //   console.log({localStorage: localStorage});
-          //   if(!!flag){
-          //     var validateMessage = confirm('Your Subscription request will be denied because you did not provide all the required Information. Click "Ok" to place your Order without Subscribing or "Cancel" to stop the Order placement.');
-          //     if(!!validateMessage){
-          //       console.log("you clicked ok");
-          //       return jQuery.Deferred().reject();//resolve();
-          //     }
-          //     else{
-          //       console.log("you clicked cancel");
-          //       return jQuery.Deferred().reject();
-          //     }
-          //   }
-          //   else{
-          //     console.log("everything ok");
-          //     return jQuery.Deferred().reject();
-          //   }
-          // });
-          cart.on("afterSubmit", function(){
-            localStorage.setItem("subscriptionDetails", "");
-            console.log({localStorage: localStorage});
-            console.log({ LiveOrderModel: LiveOrderModel.getInstance() })
-            return jQuery.Deferred().resolve();
-          });
-          
           checkout.addModuleToStep({
             step_url: 'opc',
             module: {
@@ -82,14 +51,12 @@ define('DME.AutoReorder.checkout', [
               classname: 'DME.AutoReorder.checkout.View',
               options: {
                 container: '#wizard-step-content-left',
+                model: lineItems
               }
             }
           })
         })
       }
-     
-      
-      
     }
   }
 })

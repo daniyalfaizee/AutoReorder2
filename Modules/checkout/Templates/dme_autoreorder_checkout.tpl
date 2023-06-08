@@ -3,7 +3,7 @@
   <div class="checkout-info-card-header">
     <div class="checkout-info-card-header-title">
       <h2>AutoReorder Eligible Items</h2>
-      <span style="padding:12px;font-size:0.8rem ;padding-top:5px ;"><a href="/reorder-terms-and-conditions" style="color: #0067b9;">*Terms and Conditions Apply</a></span>
+      <span style="padding:12px;font-size:0.8rem ;padding-top:5px ;"><a href="https://www.medicaleshop.com/reorder-terms-and-conditions" style="color: #0067b9;">*Terms and Conditions Apply</a></span>
     </div>
     <div class="checkout-info-card-content" style="margin-top: 30px">
       <div class="checkout-info-card-content-body">

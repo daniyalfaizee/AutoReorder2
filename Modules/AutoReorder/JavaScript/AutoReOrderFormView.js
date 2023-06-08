@@ -14,24 +14,17 @@ define('DME.AutoReOrder.FormView', [
   var AutoReorderFormViewModel = AutoReorderSS2Model
   function AutoReorderFormView(options) {
     var self = this
-
     SCFormView.call(this, new AutoReorderFormViewModel())
     this.template = dme_autoreorder_form_tpl
     this.pdp = options.pdp
     this.cart = options.cart
     this.container = options.container
-    this.itemInfo = this.pdp.getItemInfo()
     this.container.getLayout().on('afterAppendView', function () {
       self.pdp.setOption('custcol_tdc_reorder_subscribed', 'T')
       self.pdp.setOption('custcol_tdc_reorder_sub_details', '')
       // self.saveForm()
     })
 
-    localStorage.setItem('isEditView', false)
-
-    if (this.itemInfo.item.itemoptions_detail.matrixtype) {
-      this.isMatrixItem = true
-    }
     this.cart.on('afterAddLine', function () {
       self.formModel.set('afterSave', false)
       self.formModel.set('item-checkbox', false)
@@ -70,10 +63,10 @@ define('DME.AutoReOrder.FormView', [
         JSON.stringify(subscriptionDetails.custcol_tdc_reorder_sub_details)
       )
     })
-    // console.log('test2')
+    console.log('test2')
     this.itemInfo = this.pdp.getItemInfo()
     localStorage.setItem('isEditView', false)
-    // console.log(this.itemInfo.item.itemoptions_detail.matrixtype)
+    console.log(this.itemInfo.item.itemoptions_detail.matrixtype)
     if (this.itemInfo.item.itemoptions_detail.matrixtype) {
       self.isMatrixItem = true
 
@@ -83,14 +76,14 @@ define('DME.AutoReOrder.FormView', [
           var isSubscribed = JSON.parse(
             localStorage.getItem('subscriptionDetails')
           )
-          // console.log(self.getCurrentItem())
+          console.log(self.getCurrentItem())
           if (!!isSubscribed && !isSubscribed[self.getCurrentItem()]) {
-            // console.log('in 1')
+            console.log('in 1')
             self.formModel.set('item-checkbox', false)
             delete self.formModel.attributes['item-quantity']
             delete self.formModel.attributes['item-frequency']
           } else {
-            // console.log('in 2')
+            console.log('in 2')
             self.formModel.set('item-checkbox', true)
             self.formModel.set(
               'item-quantity',
@@ -106,7 +99,7 @@ define('DME.AutoReOrder.FormView', [
             localStorage.setItem('isEditView', false)
           }
         } else {
-          // console.log('in 3')
+          console.log('in 3')
           self.formModel.attributes = {}
         }
         // self.formModel.set('afterSave', false)
@@ -123,9 +116,7 @@ define('DME.AutoReOrder.FormView', [
     })
   }
   AutoReorderFormView.prototype = Object.create(SCFormView.prototype)
-
   AutoReorderFormView.prototype.constructor = AutoReorderFormView
-
   AutoReorderFormView.prototype.getEvents = function getEvents() {
     return {
       'submit form': 'saveForm',
@@ -135,7 +126,7 @@ define('DME.AutoReOrder.FormView', [
   }
 
   AutoReorderFormView.prototype.render = function render() {
-    // console.log('test3', this.formModel)
+    console.log('test3', this.formModel)
     // this.formModel.set('item-checkbox',false)
     // this.formModel.set('item-frequnecy','')
     // this.formModel.set('item-quantity','')
@@ -183,7 +174,6 @@ define('DME.AutoReOrder.FormView', [
         this.pdp.setOption('custcol_tdc_reorder_subscribed', 'F')
         this.pdp.setOption('custcol_tdc_reorder_sub_details', '')
       } else {
-        console.log('in else');
         this.pdp.setOption('custcol_tdc_reorder_subscribed', 'T')
         this.pdp.setOption(
           'custcol_tdc_reorder_sub_details',
@@ -276,20 +266,18 @@ define('DME.AutoReOrder.FormView', [
       self.formModel.get('item-checkbox')
         ? el.classList.remove('autoreorder-hide-fields')
         : el.classList.add('autoreorder-hide-fields')
-        // self.$el[0].getElementsByClassName('autoreorder-show-items')[0] = el
+      // self.$el[0].getElementsByClassName('autoreorder-show-items')[0] = el
       var el2 = self.$el[0].getElementsByClassName(
         'autoreorder-form-submit-button'
       )[0]
       self.formModel.get('item-checkbox')
         ? el2.classList.remove('autoreorder-hide-fields')
         : el2.classList.add('autoreorder-hide-fields')
-
       if (!self.formModel.get('item-checkbox')) {
         self.tempSetSubscriptionDetails()
       }
     })
   }
-
   AutoReorderFormView.prototype.getContext = function () {
     var subscriptionDetails = JSON.parse(
       localStorage.getItem('subscriptionDetails')
@@ -300,9 +288,9 @@ define('DME.AutoReOrder.FormView', [
         var afterSave =
           subscriptionDetails[this.getCurrentItem()]
             .custcol_tdc_reorder_subscribed
-            // if (afterSave) {
-            //   this.saveForm()
-            // }
+        // if (afterSave) {
+        //   this.saveForm()
+        // }
       } else if (this.isMatrixItem) {
         var afterSave = false
       } else {
@@ -318,11 +306,11 @@ define('DME.AutoReOrder.FormView', [
       custitem_auto_reorder_discount: this.isMatrixItem
         ? this.pdp.getSelectedMatrixChilds()[0].custitem_auto_reorder_discount
         : this.itemInfo.item.custitem_auto_reorder_discount,
-        isReOrderEligible:
+      isReOrderEligible:
         this.isMatrixItem && this.pdp.getSelectedMatrixChilds().length == 1
-        ? this.pdp.getSelectedMatrixChilds()[0]
-            .custitem_tdc_auto_reorder_eligible
-        : this.itemInfo.item.custitem_tdc_auto_reorder_eligible
+          ? this.pdp.getSelectedMatrixChilds()[0]
+              .custitem_tdc_auto_reorder_eligible
+          : this.itemInfo.item.custitem_tdc_auto_reorder_eligible
     }
   }
   return AutoReorderFormView
